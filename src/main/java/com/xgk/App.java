@@ -1,4 +1,4 @@
-package com.xgk.demo;
+package com.xgk;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -7,10 +7,6 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
-/**
- * @author: xugongkai
- * @created: 2022-02-08 17:56
- */
 @Slf4j
 @SpringBootApplication
 public class App implements ApplicationRunner {
@@ -20,8 +16,8 @@ public class App implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) {
-        System.out.println("Hello:)");
+    public void run(ApplicationArguments args) throws Exception {
+
     }
 
 }
