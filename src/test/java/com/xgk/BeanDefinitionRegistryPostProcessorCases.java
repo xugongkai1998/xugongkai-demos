@@ -3,11 +3,13 @@ package com.xgk;
 import lombok.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.annotation.AnnotatedGenericBeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.*;
 import org.springframework.context.annotation.Bean;
 
+import java.lang.annotation.*;
 import java.math.BigDecimal;
 
 /**
@@ -25,7 +27,8 @@ public class BeanDefinitionRegistryPostProcessorCases implements BeanDefinitionR
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         //registerByRootBeanDefinition(registry);
         //registerByChildBeanDefinition(registry);
-        registerByGenericBeanDefinition(registry);
+        //registerByGenericBeanDefinition(registry);
+        registerByAnnotatedGenericBeanDefinition(registry);
     }
 
     @Override
@@ -82,7 +85,19 @@ public class BeanDefinitionRegistryPostProcessorCases implements BeanDefinitionR
         registry.registerBeanDefinition("student", studentBeanDefinition);
     }
 
+    private void registerByAnnotatedGenericBeanDefinition(BeanDefinitionRegistry registry) {
+        AnnotatedGenericBeanDefinition beanDefinition = new AnnotatedGenericBeanDefinition(Person.class);
+        MutablePropertyValues propertyValues = new MutablePropertyValues();
+        propertyValues.add("name", "alice");
+        propertyValues.add("age", "23");
+        beanDefinition.setPropertyValues(propertyValues);
+        beanDefinition.setFactoryBeanName("personFactoryBean");
+        beanDefinition.setFactoryMethodName("init");
+        registry.registerBeanDefinition("person", beanDefinition);
+    }
+
     @Data
+    @TestAnnotation(values = {"aa", "bb", "cc"})
     public static class Person {
         private String name;
         private Integer age;
@@ -116,6 +131,14 @@ public class BeanDefinitionRegistryPostProcessorCases implements BeanDefinitionR
         public Dog(String name) {
             this.name = name;
         }
+    }
+
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.METHOD})
+    @Inherited
+    public @interface TestAnnotation {
+        String[] values();
     }
 
 }

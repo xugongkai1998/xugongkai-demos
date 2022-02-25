@@ -2,13 +2,20 @@ package com.xgk;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.AnnotatedGenericBeanDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.core.type.MethodMetadata;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author: xugongkai
@@ -32,7 +39,7 @@ public class PersonSpringBootTest {
     private ApplicationContext ctx;
 
     @Test
-    public void test1() {
+    public void testBeanFactoryRegister() {
         // 放开 com.xgk.BeanDefinitionRegistryPostProcessorCases.postProcessBeanFactory() 方法中的 registerByBeanFactoryPostProcessor()方法
         // 测试完毕后注释掉该方法
         System.out.println(pineApple);
@@ -59,6 +66,26 @@ public class PersonSpringBootTest {
         // 测试完毕后注释掉该方法
         System.out.println(person);
         System.out.println(student);
+    }
+    
+    @Test
+    public void testAnnotationGenericBeanDefinition() {
+        // 放开 com.xgk.BeanDefinitionRegistryPostProcessorCases.postProcessBeanDefinitionRegistry()方法中的 registerByAnnotatedGenericBeanDefinition()方法
+        // 测试完毕后注释掉该方法
+        System.out.println(person);
+        ConfigurableListableBeanFactory beanFactory = ((AnnotationConfigApplicationContext) ctx).getBeanFactory();
+        BeanDefinition personDf = beanFactory.getBeanDefinition("person");
+
+        AnnotationMetadata metadata = ((AnnotatedGenericBeanDefinition) personDf).getMetadata();
+        Map<String, Object> rawAnnotationAttributes = metadata.getAnnotationAttributes(BeanDefinitionRegistryPostProcessorCases.TestAnnotation.class.getName());
+        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(rawAnnotationAttributes);
+        String[] values = annotationAttributes.getStringArray("values");
+        System.out.println(Arrays.toString(values));
+
+        MethodMetadata rawFactoryMethodMetadata = ((AnnotatedGenericBeanDefinition) personDf).getFactoryMethodMetadata();
+        AnnotationAttributes factoryAnnotationAttributes = AnnotationAttributes.fromMap(rawFactoryMethodMetadata.getAnnotationAttributes(BeanDefinitionRegistryPostProcessorCases.TestAnnotation.class.getName()));
+        String values1 = factoryAnnotationAttributes.getString("values");
+        System.out.println(values1);
     }
 
     @Test
