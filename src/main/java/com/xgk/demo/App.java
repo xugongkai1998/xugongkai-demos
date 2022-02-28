@@ -1,27 +1,20 @@
 package com.xgk.demo;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.Banner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+
+import java.util.concurrent.*;
 
 /**
  * @author: xugongkai
  * @created: 2022-02-08 17:56
  */
 @Slf4j
-@SpringBootApplication
-public class App implements ApplicationRunner {
+public class App{
+
+    private static final ExecutorService pool = Executors.newFixedThreadPool(1);
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(App.class).bannerMode(Banner.Mode.OFF).run(args);
-    }
-
-    @Override
-    public void run(ApplicationArguments args) {
-        System.out.println("Hello:)");
+        System.out.println("Hello");
     }
 
 }
