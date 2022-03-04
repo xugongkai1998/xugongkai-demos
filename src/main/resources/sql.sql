@@ -1,7 +1,7 @@
 -- auto-generated definition
-create table student(
-    id   int(11) unsigned auto_increment
-        primary key,
-    name varchar(200)     null,
-    age  tinyint unsigned null
-)collate = utf8_bin;
+create table t_user(
+    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '' primary key,
+    `username` varchar(32) NOT NULL DEFAULT '' COMMENT '',
+    `password` varchar(32) NOT NULL DEFAULT '' COMMENT '',
+    `status` int not null DEFAULT -1 COMMENT ''
+)collate = utf8_bin
