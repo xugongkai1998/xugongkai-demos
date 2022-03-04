@@ -107,4 +107,23 @@ public class UserServiceA {
     public void testNotSupported2() {
         userServiceB.testNotSupported2();
     }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void testNever1() {
+        userServiceB.testNever1();
+    }
+
+    public void testNever2() {
+        userServiceB.testNever2();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void testNested1() {
+        userServiceB.testNested1();
+    }
+
+    public void testNested2() {
+        userServiceB.testNested2();
+    }
+
 }

@@ -108,4 +108,29 @@ public class UserServiceB {
         jdbcTemplate.execute(sql);
     }
 
+    @Transactional(propagation = Propagation.NEVER)
+    public void testNever1() {
+        String sql = User.insertNewUser(null);
+        jdbcTemplate.execute(sql);
+    }
+
+    @Transactional(propagation = Propagation.NEVER)
+    public void testNever2() {
+        String sql = User.insertNewUser(null);
+        jdbcTemplate.execute(sql);
+    }
+
+
+    @Transactional(propagation = Propagation.NESTED)
+    public void testNested1() {
+        String sql = User.insertNewUser(null);
+        jdbcTemplate.execute(sql);
+    }
+
+    @Transactional(propagation = Propagation.NESTED)
+    public void testNested2() {
+        String sql = User.insertNewUser(null);
+        jdbcTemplate.execute(sql);
+    }
+
 }
