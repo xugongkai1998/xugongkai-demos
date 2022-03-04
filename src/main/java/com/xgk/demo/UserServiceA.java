@@ -95,7 +95,9 @@ public class UserServiceA {
     }
 
     public void testSupports2() {
-        userServiceB.testSupports1();
+        String sql = User.insertNewUser(null);
+        jdbcTemplate.execute(sql);
+        userServiceB.testSupports2();
     }
 
 
