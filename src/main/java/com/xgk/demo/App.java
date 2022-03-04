@@ -1,11 +1,17 @@
 package com.xgk.demo;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.TransactionManager;
+
+import javax.sql.DataSource;
 
 /**
  * @author: xugongkai
@@ -13,15 +19,34 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  */
 @Slf4j
 @SpringBootApplication
-public class App implements ApplicationRunner {
+public class App {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(App.class).bannerMode(Banner.Mode.OFF).run(args);
     }
 
-    @Override
-    public void run(ApplicationArguments args) {
-        System.out.println("Hello:)");
+    @Bean
+    DataSource jdbcDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://192.168.1.204:3306/test?useUnicode=true&characterEncoding=utf-8&" +
+                "allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false&useAffectedRows=true&autoReconnect=true");
+        dataSource.setUsername("root");
+        dataSource.setPassword("123456");
+        return dataSource;
+    }
+
+    @Bean
+    JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+
+    @Bean
+    TransactionManager jdbcTransactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
 }
