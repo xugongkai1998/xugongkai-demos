@@ -1,0 +1,9 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /demos
+thread-pool:
+  pool-name: bizPool
+  core-size: 1
+  max-size: 5
+  queue-size: 1024
