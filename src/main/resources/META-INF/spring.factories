@@ -1,0 +1,4 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+    com.xgk.demo.EnvPropertyPostInjectProcessor
+org.springframework.context.ApplicationListener=\
+    com.xgk.demo.EnvPropertyPostInjectProcessor

@@ -1,0 +1,26 @@
+user:
+  info:
+    name: alice
+    age: 12
+    address: guangzhou
+
+bind-to-list:
+  - name: alice
+    age: 12
+    address: guangzhou
+  - name: tom
+    age: 13
+    address: tianhe
+  - name: jim
+    age: 11
+    address: yuexiu
+
+bind-to-map:
+  k1:
+    name: tom
+    age: 13
+    address: yuexiu
+  k2:
+    name: jim
+    age: 11
+    address: baiyun
