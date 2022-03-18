@@ -1,0 +1,28 @@
+spring:
+  kafka:
+    listener:
+      missing-topics-fatal: false
+      ack-mode: manual
+    producer:
+      bootstrap-servers: huawei.xugongkai.com:61000
+      retries: 0
+      batch-size: 16384
+      group-id: xtest_producer
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        linger.ms: 1
+        auto.create.topics.enable: true
+    consumer:
+      # 批量一次最大拉取数据量
+      max-poll-records: 5
+      auto-offset-reset: earliest
+      bootstrap-servers: huawei.xugongkai.com:61000
+      group-id: xtest_consumer
+      enable-auto-commit: false
+      auto-commit-interval: 100ms
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        session.timeout.ms: 15000
