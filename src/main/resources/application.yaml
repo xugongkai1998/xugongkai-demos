@@ -1,0 +1,18 @@
+server:
+  port: 8888
+spring:
+  redis:
+    host: ${redis_ip:huawei.xugongkai.com}
+    port: ${redis_port:60005}
+    password: ASDASDASDASD
+    redisson:
+      config: |
+        singleServerConfig:
+          password: ${spring.redis.password}
+          address: "redis://${spring.redis.host}:${spring.redis.port}"
+          database: 0
+          subscriptionConnectionMinimumIdleSize: 1
+          subscriptionConnectionPoolSize: 8
+          connectionMinimumIdleSize: 2
+          connectionPoolSize: 8
+        transportMode: "NIO"
